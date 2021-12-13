@@ -7,7 +7,7 @@ import imageviewer.view.persistence.FileImageLoader;
 public class Main {
 
     public static void main(String[] args) {
-        File file = new File("C:\\Users\\Isac\\OneDrive - Universidad de Las Palmas de Gran Canaria\\Tercero\\40975 - ISII\\IS2 - Practicas\\NetBeansProjects\\ImageViewer");
+        File file = new File(".");
         FileImageLoader imageLoader = new FileImageLoader(file);
         Image image = imageLoader.load();
         MainFrame mainFrame = new MainFrame();
