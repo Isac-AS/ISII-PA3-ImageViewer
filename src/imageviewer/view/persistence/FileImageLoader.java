@@ -1,13 +1,16 @@
 package imageviewer.view.persistence;
 
 import imageviewer.model.Image;
+import imageviewer.model.ProxyImage;
 import java.io.*;
 
 public class FileImageLoader implements ImageLoader {
 
     private final File[] files;
+    private int current;
 
     public FileImageLoader(File folder) {
+        this.current = 0;
         this.files = folder.listFiles(imageTypes());
     }
 
@@ -17,34 +20,26 @@ public class FileImageLoader implements ImageLoader {
 
     @Override
     public Image load() {
-        return imageAt(0);
+        return new ProxyImage(this.files[this.current]);
     }
 
-    private Image imageAt(int i) {
-        return new Image() {
-            @Override
-            public String name() {
-                return files[i].getName();
-            }
+    @Override
+    public Image next() {
+        if (this.current == this.files.length -1) {
+            this.current = 0;
+        } else {
+            this.current++;
+        }
+        return this.load();
+    }
 
-            @Override
-            public InputStream stream() {
-                try {
-                    return new BufferedInputStream(new FileInputStream(files[i]));
-                } catch (FileNotFoundException e) {
-                    return null;
-                }
-            }
-
-            @Override
-            public Image next() {
-                return i == files.length - 1 ? imageAt(0) : imageAt(i + 1);
-            }
-
-            @Override
-            public Image prev() {
-                return i == 0 ? imageAt(files.length - 1) : imageAt(i - 1);
-            }
-        };
+    @Override
+    public Image prev() {
+        if (this.current == 0) {
+            this.current = this.files.length -1;
+        } else {
+            this.current--;
+        }
+        return this.load();
     }
 }

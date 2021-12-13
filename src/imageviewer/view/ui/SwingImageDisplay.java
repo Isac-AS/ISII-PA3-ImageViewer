@@ -33,7 +33,6 @@ public class SwingImageDisplay extends JPanel implements ImageDisplay {
         try {
             return ImageIO.read(image.stream());
         } catch (IOException e) {
-            e.printStackTrace();
             return null;
         }
     }

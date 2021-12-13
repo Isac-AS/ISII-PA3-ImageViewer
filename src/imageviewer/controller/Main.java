@@ -10,7 +10,7 @@ public class Main {
         File file = new File(".");
         FileImageLoader imageLoader = new FileImageLoader(file);
         Image image = imageLoader.load();
-        MainFrame mainFrame = new MainFrame();
+        MainFrame mainFrame = new MainFrame(imageLoader);
         mainFrame.getImageDisplay().show(image);
     }
 }
